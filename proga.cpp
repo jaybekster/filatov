@@ -112,7 +112,7 @@ void sort(Queue *stock, int len) {
 
 }
 
-int main(){as
+int main(){
 	int i,n=200;
 	Queue queue;
 	for (int i = 0; i < 10; ++i)
@@ -122,9 +122,7 @@ int main(){as
 	cout << queue;
 	cout << queue.getn(0).data;
 	cout << queue.getn(1).data;
-	cout << queue.getn(2).data;
-	cout << queue.getn(3).data;
-	cout << queue.getn(4).data;
+
 	// cout << queue.getn(5).data;
 	// sort(&queue, queue.cnt);
 	// print__( 10, &queue.data[0] );
