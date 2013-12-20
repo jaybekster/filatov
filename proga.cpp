@@ -112,7 +112,7 @@ void sort(Queue *stock, int len) {
 
 }
 
-int main(){
+int main(){as
 	int i,n=200;
 	Queue queue;
 	for (int i = 0; i < 10; ++i)
