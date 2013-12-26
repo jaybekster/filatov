@@ -77,6 +77,14 @@ public:
 			return head->data;
 		}
 	}
+	int& getLast() { //получить элемент из конца очереди
+		if ( is_empty() ) {
+			cout << "Стек пустой" << endl;
+			exit;	
+		} else {
+			return tail->data;
+		}	
+	}
 	Queue& set(int& data) {
 		if ( is_empty() ) {
 			cout << "Стек пустой" << endl;
@@ -107,24 +115,44 @@ public:
 	}
 };
 
-void sort(Queue *stock, int len) {
-	Queue q;
-
+Queue sort(Queue *original) {
+	static Queue helpful;
+	cout << *original;
+	if (original->is_empty()) {
+		cout << "The stack is empty\n";
+		exit(0);
+	}
+	Node *node = original->head;
+	int max = node->data;
+	while (node->next) {
+		if (node->data>max) max = node->data;
+		node = node->next;
+	}
+	for (int i=0; i<=max; i+=1) {
+		node = original->head;
+		helpful.push(0);
+		while (node->next) {
+			if (node->data==i) {
+				helpful.getLast()+=1;
+			}
+			node = node->next;
+		}
+		if (node->data==i) {
+			helpful.getLast()+=1;
+		}
+	}
+	cout << helpful << endl;
+	return helpful;
 }
 
 int main(){
 	int i,n=200;
 	Queue queue;
-	for (int i = 0; i < 10; ++i)
-	{
+	Queue queue2;
+	for (int i = 0; i < 10; ++i) {
 		queue.push( rand()%10 );
 	}
-	cout << queue;
-	cout << queue.getn(0).data;
-	cout << queue.getn(1).data;
-
-	// cout << queue.getn(5).data;
-	// sort(&queue, queue.cnt);
-	// print__( 10, &queue.data[0] );
+	queue.getn(2).data;
+	queue2 = sort(&queue);
 	return 0;
 };
