@@ -127,7 +127,6 @@ Queque sort(Queque* original) {
 	assert( !original->is_empty() );
 	Node *node = original->getFirst();
 	int max = node->getData();
-
 	while ( node->getNext() ) {
 		if (node->getData()>max) max = node->getData();
 		node = node->getNext();
@@ -149,8 +148,6 @@ Queque sort(Queque* original) {
 	original->clear();
 	node = helpful.getFirst();
 	int k = -1; // счётчик;
-	cout << helpful << endl;
-
 	while (node->getNext()) {
 		k+=1;
 		if (node->getData()==0) {
@@ -161,13 +158,11 @@ Queque sort(Queque* original) {
 			original->push(k);
 		}
 		node = node->getNext();
-
 	}
 	k+=1;
 	for (int i=1; i<=node->getData(); i+=1) {
 		original->push(k);
 	}
-	cout << *original << endl;
 	return *original;
 }
 
@@ -178,6 +173,7 @@ int main() {
 		queque.push( rand()%10 );
 	}
 	cout << "Original stack is: " << queque << endl;
-	sort(&queque);
+	queque = sort(&queque);
+	cout << "Sorted stack is: " << queque << endl;
 	return 0;
 }
