@@ -23,7 +23,6 @@ public:
 	int cnt; // длина очереди (кол-во элементов в ней)
 	Queue() {
 		cnt = 0;
-		cout << "initialized" << endl;
 		head = tail = NULL;
 	};
 	bool is_empty() {
@@ -40,7 +39,6 @@ public:
 		} else {
 			head = tmp;
 		}
-		cnt--;
 		return *this;
 	};
 	Queue& clear() {
@@ -57,7 +55,6 @@ public:
 			tail->next = node;
 			tail = node;
 		}
-		cnt+=1;
 	};
 	int pop() { // извлечь элемент из начала очереди
 		if ( !is_empty() ) {
@@ -105,6 +102,10 @@ public:
 		}
 	}
 	friend ostream& operator<< ( ostream& o, Queue& q) {
+		if (q.is_empty()) {
+			cout << "NULL" << endl;
+			return o;
+		}
 		Node* node = q.head;
 		while (node->next) {
 			cout << node->data << " ";
@@ -144,15 +145,65 @@ Queue sort(Queue *original) {
 	cout << helpful << endl;
 	return helpful;
 }
+Queue getsorted(Queue * original) {
+	static Queue helpful;
+	cout << *original;
+	if (original->is_empty()) {
+		cout << "The stack is empty\n";
+		exit(0);
+	}
+	Node *node = original->head;
+	int max = node->data;
+	while (node->next) {
+		if (node->data>max) max = node->data;
+		node = node->next;
+	}
+	for (int i=0; i<=max; i+=1) {
+		node = original->head;
+		helpful.push(0);
+		while (node->next) {
+			if (node->data==i) {
+				helpful.getLast()+=1;
+			}
+			node = node->next;
+		}
+		if (node->data==i) {
+			helpful.getLast()+=1;
+		}
+	}
+	original->clear();
+	node = helpful.head;
+	cout << helpful << endl;
+	int k = 0; // счётчик;
+	while (node->next) {
+		if (node->data==0) {
+			k+=1;
+			node = node->next;
+			continue;
+		}
+		for (int i=1; i<=node->data; i+=1) {
+			original->push(k);
+		}
+		k+=1;
+		node = node->next;
+	}
+	if (node->data!=0) {
+		for (int i=1; i<=node->data; i+=1) {
+			original->push(k);
+		}
+	}
+	cout << *original << endl;
+	return helpful;
+}
 
 int main(){
 	int i,n=200;
 	Queue queue;
 	Queue queue2;
-	for (int i = 0; i < 10; ++i) {
+	for (int i = 0; i < 5; ++i) {
 		queue.push( rand()%10 );
 	}
 	queue.getn(2).data;
-	queue2 = sort(&queue);
+	queue2 = getsorted(&queue);
 	return 0;
 };
