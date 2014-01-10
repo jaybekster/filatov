@@ -4,12 +4,6 @@
 
 using namespace std;
 
-void print__(int a, int *arr) {
-	for (int i = 0; i < a; ++i)
-	{
-		cout << *(arr+i) << " ";
-	};
-}
 struct Node
 {
 	int data;
@@ -103,7 +97,7 @@ public:
 	}
 	friend ostream& operator<< ( ostream& o, Queue& q) {
 		if (q.is_empty()) {
-			cout << "NULL" << endl;
+			cout << "NULL";
 			return o;
 		}
 		Node* node = q.head;
@@ -111,43 +105,14 @@ public:
 			cout << node->data << " ";
 			node = node->next;
 		}
-		cout << node->data << endl;
+		cout << node->data;
 		return o;
 	}
 };
 
-Queue sort(Queue *original) {
+Queue sort(Queue * original) {
 	static Queue helpful;
-	cout << *original;
-	if (original->is_empty()) {
-		cout << "The stack is empty\n";
-		exit(0);
-	}
-	Node *node = original->head;
-	int max = node->data;
-	while (node->next) {
-		if (node->data>max) max = node->data;
-		node = node->next;
-	}
-	for (int i=0; i<=max; i+=1) {
-		node = original->head;
-		helpful.push(0);
-		while (node->next) {
-			if (node->data==i) {
-				helpful.getLast()+=1;
-			}
-			node = node->next;
-		}
-		if (node->data==i) {
-			helpful.getLast()+=1;
-		}
-	}
-	cout << helpful << endl;
-	return helpful;
-}
-Queue getsorted(Queue * original) {
-	static Queue helpful;
-	cout << *original;
+	// cout << *original;
 	if (original->is_empty()) {
 		cout << "The stack is empty\n";
 		exit(0);
@@ -173,7 +138,7 @@ Queue getsorted(Queue * original) {
 	}
 	original->clear();
 	node = helpful.head;
-	cout << helpful << endl;
+	// cout << helpful << endl;
 	int k = 0; // счётчик;
 	while (node->next) {
 		if (node->data==0) {
@@ -192,18 +157,17 @@ Queue getsorted(Queue * original) {
 			original->push(k);
 		}
 	}
-	cout << *original << endl;
-	return helpful;
+	return *original;
 }
 
 int main(){
-	int i,n=200;
+	srand (time(NULL));
 	Queue queue;
-	Queue queue2;
 	for (int i = 0; i < 5; ++i) {
 		queue.push( rand()%10 );
 	}
-	queue.getn(2).data;
-	queue2 = getsorted(&queue);
+	cout << "Original stack is: " << queue << endl;
+	queue = sort(&queue);
+	cout << "Sorted stack is: " << queue << endl;
 	return 0;
 };
