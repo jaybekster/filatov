@@ -8,24 +8,24 @@ using namespace std;
 class Node {
 	int data;
 	Node *next;
-public:
+	public:
 	Node() {}
-	Node(int arg1) {
-		data = arg1;
+	Node(int arg1) { //+1
+		data = arg1; //+1
 	}
-	int getData() {
+	int getData() { //0
 		return data;
 	}
 	void setNext(Node* node) {
-		next = node;
+		next = node; //+1
 		return;
 	}
-	void setData(int new_data) {
-		data = new_data;
+	void setData(int new_data) { //+1
+		data = new_data; //+1;
 		return;
 	}
-	Node* getNext() {
-		return next;
+	Node* getNext() { //+1
+		return next; //+1;
 	}
 	~Node() {}
 };
@@ -33,22 +33,22 @@ public:
 class Queque {
 	Node* head; // голова односвязного списка
 	Node* tail; // хвост односвязного списка
-public: 
+	public: 
 	Queque() {
-		head = tail = NULL;
+		head = tail = NULL; //+2
 	};
 	bool is_empty() const {
-		return head == NULL;
+		return head == NULL; //+1
 	}; 
-	Queque& push(const int data) { // добавить элемент в конец очереди
-		Node* node = new Node(data);
-		if (!head) {
+	Queque& push(const int data) { // добавить элемент в конец очереди //+6
+		Node* node = new Node(data); //+2
+		if (!head) { +1;
 			head = tail = node;
 		} else {
-			tail->setNext(node);
-			tail = node;
+			tail->setNext(node); //+2;
+			tail = node; //+1;
 		}
-		return *this;
+		return *this; //+1
 	};
 	Queque& pop(const int data) { // добавить элемент в неачало очереди
 		Node* node = new Node(data);
@@ -60,8 +60,8 @@ public:
 		}
 		return *this;
 	};
-	Node* getFirst() {
-		return head;
+	Node* getFirst() { //+1
+		return head; //+1;
 	}
 	Node* getLast() {
 		return tail;
@@ -69,16 +69,16 @@ public:
 	int getFirstData() {
 		return head->getData();
 	}
-	int getLastData() {
-		return tail->getData();
+	int getLastData() { //+2
+		return tail->getData(); //+2
 	}
 	Queque& setFirstData(const int data) {
 		head->setData(data);
 		return *this;
 	}
-	Queque& setLastData(const int data) {
-		tail->setData(data);
-		return *this;
+	Queque& setLastData(const int data) { //+3
+		tail->setData(data); //+2
+		return *this; //+1
 	}
 	Node* getn(int ind) {
 		Node* node = head;
@@ -91,10 +91,9 @@ public:
 		}
 		return NULL;
 	}
-	Queque& clear() {
-		// while(!is_empty()) del();
-		head = tail = NULL;
-		return *this;
+	Queque& clear() { //+3
+		head = tail = NULL; //+2;
+		return *this; //+1;
 	};
 	Queque& del() { // удалить элемент из начала очереди
 		assert( !is_empty() );
@@ -124,46 +123,46 @@ public:
 
 Queque sort(Queque* original) {
 	Queque helpful;
-	assert( !original->is_empty() );
-	Node *node = original->getFirst();
-	int max = node->getData();
-	while ( node->getNext() ) {
-		if (node->getData()>max) max = node->getData();
-		node = node->getNext();
+	assert( !original->is_empty() ); //+2
+	Node *node = original->getFirst();  //+3
+	int max = node->getData(); //+3
+	while ( node->getNext() ) { //sum(i=1; n-1) +2
+		if (node->getData()>max) max = node->getData(); //+6
+		node = node->getNext(); //+3
 	}
-	if (node->getData()>max) max = node->getData();
-	for (int i=0; i<=max; i+=1) {
-		node = original->getFirst();
-		helpful.push(0);
-		while (node->getNext()) {
-			if (node->getData()==i) {
-				helpful.setLastData( helpful.getLastData()+1 );
+	if (node->getData()>max) max = node->getData(); //+6
+	for (int i=0; i<=max; i+=1) { //+1 //sum(i=0,  max+1) +3
+		node = original->getFirst(); //+3
+		helpful.push(0); //+7
+		while (node->getNext() ) { //+2 //sum(1, n-1)
+			if (node->getData()==i) { //+3
+				helpful.setLastData( helpful.getLastData()+1 ); //+4 +4 = +8
 			}
-			node = node->getNext();
+			node = node->getNext(); //+3
 		}
-		if (node->getData()==i) {
-			helpful.setLastData( helpful.getLastData()+1 );
+		if (node->getData()==i) { //+3
+			helpful.setLastData( helpful.getLastData()+1 ); //+2 +2 = +8
 		}
 	}
-	original->clear();
-	node = helpful.getFirst();
-	int k = -1; // счётчик;
-	while (node->getNext()) {
-		k+=1;
-		if (node->getData()==0) {
-			node = node->getNext();
+	original->clear(); //+4
+	node = helpful.getFirst(); //+3
+	int k = -1; // счётчик //+1;
+	while (node->getNext()) { //sum(0, max-1) +2
+		k+=1; //+2
+		if (node->getData()==0) { //+3
+			node = node->getNext(); //+3
 			continue;
 		}
-		for (int i=1; i<=node->getData(); i+=1) {
-			original->push(k);
+		for (int i=1; i<=node->getData(); i+=1) { //+1 //sum(i=1, i=n) +4
+			original->push(k); //+6
 		}
-		node = node->getNext();
+		node = node->getNext(); //+3
 	}
-	k+=1;
-	for (int i=1; i<=node->getData(); i+=1) {
-		original->push(k);
+	k+=1; //+1
+	for (int i=1; i<=node->getData(); i+=1) { //+1 //sum(i=1, i=n) +4
+		original->push(k); //+6;
 	}
-	return *original;
+	return *original; //+1
 }
 
 int main() {
