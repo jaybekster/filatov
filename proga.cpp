@@ -2,6 +2,8 @@
 #include <iostream>
 #include <cstdlib>
 #include <assert.h>
+#include <ctime>
+#include <sys/time.h>
 
 using namespace std;
 
@@ -126,15 +128,15 @@ Queque sort(Queque* original) {
 	assert( !original->is_empty() ); //+2
 	Node *node = original->getFirst();  //+3
 	int max = node->getData(); //+3
-	while ( node->getNext() ) { //sum(i=1; n-1) +2
+	while ( node->getNext() ) { //sum(i=0; n-1) +2
 		if (node->getData()>max) max = node->getData(); //+6
 		node = node->getNext(); //+3
 	}
 	if (node->getData()>max) max = node->getData(); //+6
-	for (int i=0; i<=max; i+=1) { //+1 //sum(i=0,  max+1) +3
+	for (int i=0; i<=max; i+=1) { //+1 //sum(i=1,  max+1) +3
 		node = original->getFirst(); //+3
 		helpful.push(0); //+7
-		while (node->getNext() ) { //+2 //sum(1, n-1)
+		while (node->getNext() ) { //sum(1, n-1) +2
 			if (node->getData()==i) { //+3
 				helpful.setLastData( helpful.getLastData()+1 ); //+4 +4 = +8
 			}
@@ -168,11 +170,23 @@ Queque sort(Queque* original) {
 int main() {
 	srand (time(NULL));
 	Queque queque;
-	for (int i = 0; i < 10; ++i) {
-		queque.push( rand()%10 );
+	for (int i = 0; i < 200; ++i) {
+		queque.push( rand()%200 );
 	}
 	cout << "Original stack is: " << queque << endl;
+	int nop = 0;
+
+	struct timeval start, end;
+    long mtime, seconds, useconds;    
+    gettimeofday(&start, NULL);
+	
 	queque = sort(&queque);
-	cout << "Sorted stack is: " << queque << endl;
+
+    gettimeofday(&end, NULL);
+    seconds  = end.tv_sec  - start.tv_sec;
+    useconds = end.tv_usec - start.tv_usec;
+    mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
+    printf("Elapsed time: %ld milliseconds\n", mtime);
+    cout << queque << endl;
 	return 0;
-}
+}	
