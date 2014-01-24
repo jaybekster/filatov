@@ -136,7 +136,7 @@ Queque sort(Queque* original) {
 	for (int i=0; i<=max; i+=1) { //+1 //sum(i=1,  max+1) +3
 		node = original->getFirst(); //+3
 		helpful.push(0); //+7
-		while (node->getNext() ) { //sum(1, n-1) +2
+		while (node->getNext() ) { //sum(0, n-1) +2
 			if (node->getData()==i) { //+3
 				helpful.setLastData( helpful.getLastData()+1 ); //+4 +4 = +8
 			}
@@ -173,20 +173,23 @@ int main() {
 	for (int i = 0; i < 200; ++i) {
 		queque.push( rand()%200 );
 	}
-	cout << "Original stack is: " << queque << endl;
+	// cout << "Original stack is: " << queque << endl;
+	
 	int nop = 0;
 
 	struct timeval start, end;
     long mtime, seconds, useconds;    
     gettimeofday(&start, NULL);
 	
-	queque = sort(&queque);
+	// queque = sort(&queque);
+
+    sort(&queque);
 
     gettimeofday(&end, NULL);
     seconds  = end.tv_sec  - start.tv_sec;
     useconds = end.tv_usec - start.tv_usec;
     mtime = ((seconds) * 1000 + useconds/1000.0) + 0.5;
     printf("Elapsed time: %ld milliseconds\n", mtime);
-    cout << queque << endl;
+    // cout << queque << endl;
 	return 0;
 }	
